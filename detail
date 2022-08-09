@@ -1,0 +1,27 @@
+flutter pub publish --dry-run
+flutter pub logout to logout and flutter pub login to login.
+flutter pub publish
+
+
+
+git init
+git add -A
+git commit -m 'Added my project'
+git remote add origin path
+git push -u -f origin main
+
+
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Yadav-Sunil/internet_speed.git
+git push -u origin main
+
+
+git push --set-upstream origin master
+
+
+git remote add origin https://github.com/Yadav-Sunil/internet_speed.git
+git branch -M main
+git push -u origin main

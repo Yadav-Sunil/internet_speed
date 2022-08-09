@@ -1,3 +1,5 @@
 ## 0.0.1
+* Upgraded version of internet_speed_test plugin
 
-* TODO: Describe initial release.
+## 0.0.2
+* Upgraded version of internet_speed_test plugin
