@@ -1,7 +1,7 @@
 name: internet_speed
-description: A new Flutter project.
+description: Internet speed test plugin to integrate it in your app whenever you want.
 version: 0.0.1
-homepage:
+homepage: https://github.com/Yadav-Sunil/internet_speed.git
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
