@@ -9,18 +9,18 @@ Internet speed test plugin to integrate it in your app whenever you want.
 ### Add dependency
 
 ```yaml
-  internet_speed: ^0.0.1
+  internet_speed: ^0.0.3
 ```
 
 ### Example
 
 ```dart
 
-  import 'package:internet_speed_test/internet_speed_test.dart';
+import 'package:internet_speed/internet_speed.dart';
 
-  final internetSpeedTest = InternetSpeedTest();
+  final internetSpeed = InternetSpeed();
 
-  internetSpeedTest.startDownloadTesting(
+  internetSpeed.startDownloadTesting(
      onDone: (double transferRate, SpeedUnit unit) {
         // TODO: Change UI
      },
@@ -34,7 +34,7 @@ Internet speed test plugin to integrate it in your app whenever you want.
 
 
 
-  internetSpeedTest.startUploadTesting(
+  internetSpeed.startUploadTesting(
      onDone: (double transferRate, SpeedUnit unit) {
        print('the transfer rate $transferRate');
        setState(() {
@@ -61,11 +61,11 @@ You can also configure your test server URL
 
 ```dart
 
-  import 'package:internet_speed_test/internet_speed_test.dart';
+import 'package:internet_speed/internet_speed.dart';
 
-  final internetSpeedTest = InternetSpeedTest();
+  final internetSpeed = internetSpeed();
 
-  internetSpeedTest.startDownloadTesting(
+  internetSpeed.startDownloadTesting(
      onDone: (double transferRate, SpeedUnit unit) {
         // TODO: Change UI
      },
@@ -80,7 +80,7 @@ You can also configure your test server URL
 
 
 
-  internetSpeedTest.startUploadTesting(
+  internetSpeed.startUploadTesting(
      onDone: (double transferRate, SpeedUnit unit) {
        print('the transfer rate $transferRate');
        setState(() {
