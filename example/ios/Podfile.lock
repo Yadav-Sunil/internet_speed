@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - internet_speed (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - internet_speed (from `.symlinks/plugins/internet_speed/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  internet_speed:
+    :path: ".symlinks/plugins/internet_speed/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  internet_speed: a7f11890797f411700c80714d010dd2247a30c0e
+
+PODFILE CHECKSUM: 0ba249d2c76f95d8253d785b85fca15e50496b82
+
+COCOAPODS: 1.11.3
