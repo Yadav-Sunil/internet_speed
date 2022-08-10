@@ -16,6 +16,8 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 /** InternetSpeedPlugin */
@@ -62,21 +64,20 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
 
     private fun startListening(args: Any, result: Result, methodName: String, testServer: String) {
         // Get callback id
-        println("testttt")
         val currentListenerId = args as Int
-        println("testttt")
+        println("startListening $currentListenerId")
         val runnable = Runnable {
             if (callbackById.containsKey(currentListenerId)) {
                 val argsMap: MutableMap<String, Any> = mutableMapOf()
                 argsMap["id"] = currentListenerId
-                println("testttt $currentListenerId")
+                println("startListening 2  $currentListenerId")
                 when (methodName) {
                     "startDownloadTesting" -> {
                         testDownloadSpeed(object : TestListener {
                             override fun onComplete(transferRate: Double) {
                                 argsMap["transferRate"] = transferRate
                                 argsMap["type"] = ListenerEnum.COMPLETE.ordinal
-                                runBlocking(Dispatchers.Main) {
+                                GlobalScope.launch(Dispatchers.Main) {
                                     channel.invokeMethod("callListener", argsMap)
                                 }
                             }
@@ -85,7 +86,10 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
                                 argsMap["speedTestError"] = speedTestError
                                 argsMap["errorMessage"] = errorMessage
                                 argsMap["type"] = ListenerEnum.ERROR.ordinal
-                                runBlocking(Dispatchers.Main) {
+                                println("onError speedTestError, $speedTestError")
+                                println("onError errorMessage, $errorMessage")
+                                println("onError type, ${ListenerEnum.ERROR.ordinal}")
+                                GlobalScope.launch(Dispatchers.Main) {
                                     channel.invokeMethod("callListener", argsMap)
                                 }
                             }
@@ -95,7 +99,7 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
                                 argsMap["percent"] = percent
                                 argsMap["transferRate"] = transferRate
                                 argsMap["type"] = ListenerEnum.PROGRESS.ordinal
-                                runBlocking(Dispatchers.Main) {
+                                GlobalScope.launch(Dispatchers.Main) {
                                     channel.invokeMethod("callListener", argsMap)
                                 }
                             }
@@ -106,7 +110,7 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
                             override fun onComplete(transferRate: Double) {
                                 argsMap["transferRate"] = transferRate
                                 argsMap["type"] = ListenerEnum.COMPLETE.ordinal
-                                runBlocking(Dispatchers.Main) {
+                                GlobalScope.launch(Dispatchers.Main) {
                                     channel.invokeMethod("callListener", argsMap)
                                 }
                             }
@@ -115,7 +119,10 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
                                 argsMap["speedTestError"] = speedTestError
                                 argsMap["errorMessage"] = errorMessage
                                 argsMap["type"] = ListenerEnum.ERROR.ordinal
-                                runBlocking(Dispatchers.Main) {
+                                println("onError speedTestError, $speedTestError")
+                                println("onError errorMessage, $errorMessage")
+                                println("onError type, ${ListenerEnum.ERROR.ordinal}")
+                                GlobalScope.launch(Dispatchers.Main) {
                                     channel.invokeMethod("callListener", argsMap)
                                 }
                             }
@@ -124,7 +131,7 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
                                 argsMap["percent"] = percent
                                 argsMap["transferRate"] = transferRate
                                 argsMap["type"] = ListenerEnum.PROGRESS.ordinal
-                                runBlocking(Dispatchers.Main) {
+                                GlobalScope.launch(Dispatchers.Main) {
                                     channel.invokeMethod("callListener", argsMap)
                                 }
                             }
@@ -145,7 +152,7 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
 
     private fun testUploadSpeed(testListener: TestListener, testServer: String) {
         // add a listener to wait for speedtest completion and progress
-        println("Testing Testing")
+        println("Start UploadSpeed Testing")
         speedTestSocket.addSpeedTestListener(object : ISpeedTestListener {
             override fun onCompletion(report: SpeedTestReport) {
 //                // called when download/upload is complete
@@ -188,12 +195,12 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
                 )
             }
         })
-        println("After Testing")
+        println("After UploadSpeed Testing")
     }
 
     private fun testDownloadSpeed(testListener: TestListener, testServer: String) {
         // add a listener to wait for speedtest completion and progress
-        println("Testing Testing")
+        println("Start DownloadSpeed Testing")
         speedTestSocket.addSpeedTestListener(object : ISpeedTestListener {
             override fun onCompletion(report: SpeedTestReport) {
 //                // called when download/upload is complete
@@ -218,7 +225,6 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
         })
 //        speedTestSocket.startDownloadRepeat("http://ipv4.ikoula.testdebit.info/1M.iso", 10000)
 
-
         speedTestSocket.startDownloadRepeat(testServer,
             20000, 500, object : IRepeatListener {
                 override fun onCompletion(report: SpeedTestReport) {
@@ -240,7 +246,7 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
                 }
             })
 
-        println("After Testing")
+        println("After DownloadSpeed Testing")
     }
 
     private fun cancelListening(args: Any, result: Result) {
@@ -257,6 +263,6 @@ class InternetSpeedPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     fun println(message: Any?) {
-        Log.e("TAG", "$message")
+//        Log.e("TAG", "$message")
     }
 }

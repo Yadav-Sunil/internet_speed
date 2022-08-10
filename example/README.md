@@ -11,6 +11,14 @@ Internet speed test plugin to integrate it in your app whenever you want.
   internet_speed: ^0.0.3
 ```
 
+### Add in Info.plist
+```
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+```
 ### Example
 
 ```dart

@@ -19,7 +19,7 @@ git remote add origin https://github.com/Yadav-Sunil/internet_speed.git
 git push -u origin main
 
 
-git push --set-upstream origin master
+
 
 
 git remote add origin https://github.com/Yadav-Sunil/internet_speed.git

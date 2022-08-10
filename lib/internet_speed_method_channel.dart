@@ -50,14 +50,15 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
             downloadRate = 0;
             _callbacksById.remove(call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.ERROR.index) {
-            debugPrint('onError : ${call.arguments["speedTestError"]}');
-            debugPrint('onError : ${call.arguments["errorMessage"]}');
+            debugPrint('onError ----------------------------------------------------------------- speedTestError : ${call.arguments["speedTestError"]}');
+            debugPrint('onError ----------------------------------------------------------------- errorMessage : ${call.arguments["errorMessage"]}');
+            debugPrint('onError ----------------------------------------------------------------- id : ${call.arguments["id"]}');
             _callbacksById[call.arguments["id"]]!.item1(
                 call.arguments['errorMessage'],
                 call.arguments['speedTestError']);
             downloadSteps = 0;
             downloadRate = 0;
-            _callbacksById.remove(call.arguments["id"]);
+            // methodChannel.invokeMethod("cancelListening", call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.PROGRESS.index) {
             double rate = (call.arguments['transferRate'] ~/ 1000).toDouble();
             debugPrint('rate is $rate');
@@ -88,11 +89,13 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
             uploadRate = 0;
             _callbacksById.remove(call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.ERROR.index) {
-            debugPrint('onError : ${call.arguments["speedTestError"]}');
-            debugPrint('onError : ${call.arguments["errorMessage"]}');
+            debugPrint('onError ----------------------------------------------------------------- speedTestError : ${call.arguments["speedTestError"]}');
+            debugPrint('onError ----------------------------------------------------------------- errorMessage : ${call.arguments["errorMessage"]}');
+            debugPrint('onError ----------------------------------------------------------------- id : ${call.arguments["id"]}');
             _callbacksById[call.arguments["id"]]!.item1(
                 call.arguments['errorMessage'],
                 call.arguments['speedTestError']);
+            // methodChannel.invokeMethod("cancelListening", call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.PROGRESS.index) {
             double rate = (call.arguments['transferRate'] ~/ 1000).toDouble();
             debugPrint('rate is $rate');

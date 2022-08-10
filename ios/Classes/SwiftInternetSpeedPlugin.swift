@@ -19,7 +19,6 @@ public class SwiftInternetSpeedPlugin: NSObject, FlutterPlugin {
         if let fileSizeArgument = argsMap["fileSize"] as? Int {
             fileSize = fileSizeArgument
         }
-        print("file is of size \(fileSize) Bytes")
         switch args {
         case 0:
             startListening(args: args, flutterResult: result, methodName: "startDownloadTesting", testServer: argsMap["testServer"] as! String, fileSize: fileSize)
@@ -33,16 +32,12 @@ public class SwiftInternetSpeedPlugin: NSObject, FlutterPlugin {
     }
     
     func startListening(args: Any, flutterResult: FlutterResult, methodName:String, testServer: String, fileSize: Int) {
-        print("Method name is \(methodName)")
         let currentListenerId = args as! Int
-        print("id is \(currentListenerId)")
-        
+
         let fun = {
             if (self.callbackById.contains(where: { (key, _) -> Bool in
-                print("does contain key \(key == currentListenerId)")
                 return key == currentListenerId
             })) {
-                print("inside if")
                 switch methodName {
                 case "startDownloadTesting" :
                     self.speedTest.runDownloadTest(for: URL(string: testServer)!, size: fileSize, timeout: 20000, current: { (currentSpeed) in
@@ -66,7 +61,6 @@ public class SwiftInternetSpeedPlugin: NSObject, FlutterPlugin {
                                 SwiftInternetSpeedPlugin.channel.invokeMethod("callListener", arguments: argsMap)
                             }
                         case .error(let error):
-                            print("Error is \(error.localizedDescription)")
                             var argsMap: [String: Any] = [:]
                             argsMap["id"] = currentListenerId
                             argsMap["speedTestError"] = error.localizedDescription
@@ -103,15 +97,11 @@ public class SwiftInternetSpeedPlugin: NSObject, FlutterPlugin {
                                 SwiftInternetSpeedPlugin.channel.invokeMethod("callListener", arguments: argsMap)
                             }
                         case .error(let error):
-                            
-                            print("Error is \(error.localizedDescription)")
-                            
                             var argsMap: [String: Any] = [:]
                             argsMap["id"] = currentListenerId
                             argsMap["speedTestError"] = error.localizedDescription
                             argsMap["type"] = 1
                             DispatchQueue.main.async {
-                                print("invokeMethod callListener")
                                 SwiftInternetSpeedPlugin.channel.invokeMethod("callListener", arguments: argsMap)
                             }
                         }

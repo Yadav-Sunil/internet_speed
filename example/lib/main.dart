@@ -15,12 +15,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final internetSpeed = InternetSpeed();
+  InternetSpeed internetSpeed = InternetSpeed();
 
   double downloadRate = 0;
   double uploadRate = 0;
-  String downloadProgress = '0';
-  String uploadProgress = '0';
+  double downloadProgress = 0;
+  double uploadProgress = 0;
 
   String unitText = 'Mb/s';
 
@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
                       setState(() {
                         downloadRate = transferRate;
                         unitText = unit == SpeedUnit.Kbps ? 'Kb/s' : 'Mb/s';
-                        downloadProgress = '100';
+                        downloadProgress = 100;
                       });
                     },
                     onProgress:
@@ -61,10 +61,11 @@ class _MyAppState extends State<MyApp> {
                       setState(() {
                         downloadRate = transferRate;
                         unitText = unit == SpeedUnit.Kbps ? 'Kb/s' : 'Mb/s';
-                        downloadProgress = percent.toStringAsFixed(2);
+                        downloadProgress = percent.truncateToDouble();
                       });
                     },
                     onError: (String errorMessage, String speedTestError) {
+                      downloadProgress = 0;
                       debugPrint(
                           'the errorMessage $errorMessage, the speedTestError $speedTestError');
                     },
@@ -88,7 +89,7 @@ class _MyAppState extends State<MyApp> {
                       setState(() {
                         uploadRate = transferRate;
                         unitText = unit == SpeedUnit.Kbps ? 'Kb/s' : 'Mb/s';
-                        uploadProgress = '100';
+                        uploadProgress = 100;
                       });
                     },
                     onProgress:
@@ -98,10 +99,11 @@ class _MyAppState extends State<MyApp> {
                       setState(() {
                         uploadRate = transferRate;
                         unitText = unit == SpeedUnit.Kbps ? 'Kb/s' : 'Mb/s';
-                        uploadProgress = percent.toStringAsFixed(2);
+                        uploadProgress = percent.truncateToDouble();
                       });
                     },
                     onError: (String errorMessage, String speedTestError) {
+                      downloadProgress = 0;
                       debugPrint(
                           'the errorMessage $errorMessage, the speedTestError $speedTestError');
                     },
