@@ -8,7 +8,7 @@ Internet speed test plugin to integrate it in your app whenever you want.
 ### Add dependency
 
 ```yaml
-  internet_speed: ^0.0.3
+  internet_speed: ^0.0.5
 ```
 
 ### Add in Info.plist

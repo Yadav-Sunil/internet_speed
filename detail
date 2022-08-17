@@ -6,9 +6,9 @@ flutter pub publish
 
 git init
 git add -A
-git commit -m 'Added my project'
+git commit -m 'Fixed crash on internet disconnected running task'
 git remote add origin path
-git push -u -f origin main
+git push -u -f origin main  /  git push --set-upstream origin master
 
 
 git init

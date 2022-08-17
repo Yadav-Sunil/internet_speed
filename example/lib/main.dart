@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                   internetSpeed.startDownloadTesting(
                     onDone: (double transferRate, SpeedUnit unit) {
-                      debugPrint('the transfer rate $transferRate');
+                      debugPrint('the transfer rate $transferRate, the percent 100');
                       setState(() {
                         downloadRate = transferRate;
                         unitText = unit == SpeedUnit.Kbps ? 'Kb/s' : 'Mb/s';
@@ -85,7 +85,7 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                   internetSpeed.startUploadTesting(
                     onDone: (double transferRate, SpeedUnit unit) {
-                      debugPrint('the transfer rate $transferRate');
+                      debugPrint('the transfer rate $transferRate, the percent 100');
                       setState(() {
                         uploadRate = transferRate;
                         unitText = unit == SpeedUnit.Kbps ? 'Kb/s' : 'Mb/s';

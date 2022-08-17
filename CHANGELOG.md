@@ -9,3 +9,6 @@
 
 ## 0.0.4
 * Fixed crash on internet disconnected running task
+
+## 0.0.5
+* Remove logs

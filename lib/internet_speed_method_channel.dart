@@ -27,10 +27,14 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
   int downloadSteps = 0;
   int uploadSteps = 0;
 
+  void appLog(String msg){
+    // debugPrint(msg);
+  }
+
   Future<void> _methodCallHandler(MethodCall call) async {
-    debugPrint('arguments are ${call.arguments}');
-//    debugPrint('arguments type is  ${call.arguments['type']}');
-    debugPrint('callbacks are $_callbacksById');
+    appLog('arguments are ${call.arguments}');
+//    appLog('arguments type is  ${call.arguments['type']}');
+    appLog('callbacks are $_callbacksById');
     switch (call.method) {
       case 'callListener':
         if (call.arguments["id"] as int ==
@@ -39,8 +43,8 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
             downloadSteps++;
             downloadRate +=
                 int.parse((call.arguments['transferRate'] ~/ 1000).toString());
-            debugPrint('download steps is $downloadSteps}');
-            debugPrint('download steps is $downloadRate}');
+            appLog('download steps is $downloadSteps}');
+            appLog('download steps is $downloadRate}');
             double average = (downloadRate ~/ downloadSteps).toDouble();
             SpeedUnit unit = SpeedUnit.Kbps;
             average /= 1000;
@@ -50,18 +54,18 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
             downloadRate = 0;
             _callbacksById.remove(call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.ERROR.index) {
-            debugPrint('onError ----------------------------------------------------------------- speedTestError : ${call.arguments["speedTestError"]}');
-            debugPrint('onError ----------------------------------------------------------------- errorMessage : ${call.arguments["errorMessage"]}');
-            debugPrint('onError ----------------------------------------------------------------- id : ${call.arguments["id"]}');
+            appLog('onError ----------------------------------------------------------------- speedTestError : ${call.arguments["speedTestError"]}');
+            appLog('onError ----------------------------------------------------------------- errorMessage : ${call.arguments["errorMessage"]}');
+            appLog('onError ----------------------------------------------------------------- id : ${call.arguments["id"]}');
             _callbacksById[call.arguments["id"]]!.item1(
                 call.arguments['errorMessage'],
                 call.arguments['speedTestError']);
             downloadSteps = 0;
             downloadRate = 0;
-            // methodChannel.invokeMethod("cancelListening", call.arguments["id"]);
+            methodChannel.invokeMethod("cancelListening", call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.PROGRESS.index) {
             double rate = (call.arguments['transferRate'] ~/ 1000).toDouble();
-            debugPrint('rate is $rate');
+            appLog('rate is $rate');
             if (rate != 0) downloadSteps++;
             downloadRate += rate.toInt();
             SpeedUnit unit = SpeedUnit.Kbps;
@@ -73,13 +77,13 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
         } else if (call.arguments["id"] as int ==
             CallbacksEnum.START_UPLOAD_TESTING.index) {
           if (call.arguments['type'] == ListenerEnum.COMPLETE.index) {
-            debugPrint('onComplete : ${call.arguments['transferRate']}');
+            appLog('onComplete : ${call.arguments['transferRate']}');
 
             uploadSteps++;
             uploadRate +=
                 int.parse((call.arguments['transferRate'] ~/ 1000).toString());
-            debugPrint('download steps is $uploadSteps}');
-            debugPrint('download steps is $uploadRate}');
+            appLog('download steps is $uploadSteps}');
+            appLog('download steps is $uploadRate}');
             double average = (uploadRate ~/ uploadSteps).toDouble();
             SpeedUnit unit = SpeedUnit.Kbps;
             average /= 1000;
@@ -89,16 +93,16 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
             uploadRate = 0;
             _callbacksById.remove(call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.ERROR.index) {
-            debugPrint('onError ----------------------------------------------------------------- speedTestError : ${call.arguments["speedTestError"]}');
-            debugPrint('onError ----------------------------------------------------------------- errorMessage : ${call.arguments["errorMessage"]}');
-            debugPrint('onError ----------------------------------------------------------------- id : ${call.arguments["id"]}');
+            appLog('onError ----------------------------------------------------------------- speedTestError : ${call.arguments["speedTestError"]}');
+            appLog('onError ----------------------------------------------------------------- errorMessage : ${call.arguments["errorMessage"]}');
+            appLog('onError ----------------------------------------------------------------- id : ${call.arguments["id"]}');
             _callbacksById[call.arguments["id"]]!.item1(
                 call.arguments['errorMessage'],
                 call.arguments['speedTestError']);
-            // methodChannel.invokeMethod("cancelListening", call.arguments["id"]);
+            methodChannel.invokeMethod("cancelListening", call.arguments["id"]);
           } else if (call.arguments['type'] == ListenerEnum.PROGRESS.index) {
             double rate = (call.arguments['transferRate'] ~/ 1000).toDouble();
-            debugPrint('rate is $rate');
+            appLog('rate is $rate');
             if (rate != 0) uploadSteps++;
             uploadRate += rate.toInt();
             SpeedUnit unit = SpeedUnit.Kbps;
@@ -111,7 +115,7 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
 //        _callbacksById[call.arguments["id"]](call.arguments["args"]);
         break;
       default:
-        debugPrint(
+        appLog(
             'TestFairy: Ignoring invoke from native. This normally shouldn\'t happen.');
     }
 
@@ -151,7 +155,7 @@ class MethodChannelInternetSpeed extends InternetSpeedPlatform {
       int fileSize = 200000}) async {
     methodChannel.setMethodCallHandler(_methodCallHandler);
     int currentListenerId = callbacksEnum.index;
-    debugPrint('test $currentListenerId');
+    appLog('test $currentListenerId');
     _callbacksById[currentListenerId] = callback;
     await methodChannel.invokeMethod(
       "startListening",

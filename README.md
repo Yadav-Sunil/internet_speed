@@ -9,7 +9,15 @@ Internet speed test plugin to integrate it in your app whenever you want.
 ### Add dependency
 
 ```yaml
-  internet_speed: ^0.0.4
+  internet_speed: ^0.0.5
+```
+### Add in Info.plist
+```
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 ```
 
 ### Example
